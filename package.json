@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/Tudwall/AFEC-gestion-missions#readme",
   "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
     "nodemon": "^3.1.9"
   }
 }
