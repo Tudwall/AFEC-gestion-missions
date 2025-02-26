@@ -4,7 +4,14 @@
 
 ### mise en place du .env
 
-`PORT = port utilisé par express`
+```
+PORT = port utilisé par express
+DB_HOST = hôte de la base de données
+DB_PORT = port de la base de données
+DB_USER = nom d'utilisateur
+DB_PWD = mot de passe
+DATABASE = nom de la base de données
+```
 
 #### Pourquoi SQL/MariaDB ?
 
