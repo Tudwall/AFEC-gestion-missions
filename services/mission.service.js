@@ -17,6 +17,14 @@ class MissionService {
 			throw new Error(err.message);
 		}
 	}
+
+	async getMissionsByOrgId(orgId) {
+		try {
+			return await this.missionRepository.getMissionsByOrgId(orgId);
+		} catch (err) {
+			throw new Error(err.message);
+		}
+	}
 }
 
 export default MissionService;

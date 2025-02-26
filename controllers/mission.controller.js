@@ -19,5 +19,16 @@ class MissionController {
 			res.status(400).json({ err: err.message });
 		}
 	}
+
+	async getMissionsByOrgId(req, res) {
+		const { orgId } = req.params;
+		try {
+			const missions = await this.missionService.getMissionsByOrgId(orgId);
+			res.status(200).json(missions);
+		} catch (err) {
+			res.status(400).json({ err: err.message });
+		}
+	}
 }
+
 export default MissionController;
