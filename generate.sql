@@ -28,8 +28,11 @@ CREATE TABLE
         id INT PRIMARY KEY AUTO_INCREMENT,
         title VARCHAR(250) NOT NULL,
         missionDetails VARCHAR(2000) NOT NULL,
-        missionDate DATE NOT NULL,
+        missionDate DATETIME NOT NULL,
         orgId INT NOT NULL,
+        createdOn DATETIME NOT NULL,
+        updatedOn DATETIME,
+        isDeleted BOOLEAN NOT NULL DEFAULT FALSE,
         CONSTRAINT fk_orgId FOREIGN KEY (orgId) REFERENCES organization (id)
     );
 
@@ -39,6 +42,8 @@ CREATE TABLE
         status VARCHAR(10) NOT NULL DEFAULT "En attente",
         missionId INT NOT NULL,
         volunteerId INT NOT NULL,
+        createdOn DATETIME NOT NULL,
+        updatedOn DATETIME,
         CONSTRAINT chk_status CHECK (status IN ("Acceptée", "Refusée", "En attente")),
         CONSTRAINT fk_missionId FOREIGN KEY (missionId) REFERENCES mission (id),
         CONSTRAINT fk_volunteerId FOREIGN KEY (volunteerId) REFERENCES volunteer (id)

@@ -17,13 +17,14 @@ VALUES
     );
 
 INSERT INTO
-    mission (title, missionDetails, missionDate, orgId)
+    mission (title, missionDetails, missionDate, orgId, createdOn)
 VALUES
     (
         "Livraison de croissant",
         "Livraison de croissant aux précaires de viennoiseries",
         "2025-03-11",
-        2
+        2,
+        "2025-02-26"
     );
 
 INSERT INTO
