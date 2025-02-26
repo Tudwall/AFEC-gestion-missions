@@ -25,6 +25,14 @@ class MissionService {
 			throw new Error(err.message);
 		}
 	}
+
+	async getMissionById(id) {
+		try {
+			return await this.missionRepository.getMissionById(id);
+		} catch (err) {
+			throw new Error(err.message);
+		}
+	}
 }
 
 export default MissionService;

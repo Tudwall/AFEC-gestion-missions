@@ -32,7 +32,24 @@ class MissionRepository {
 			return missions || null;
 		} catch (err) {
 			throw new Error(
-				"Erreur lors de la récupération des missions de l'association: " + err
+				`Erreur lors de la récupération des missions de l'association ${orgId}: ${err}`
+			);
+		} finally {
+			if (conn) conn.release();
+		}
+	}
+
+	async getMissionById(id) {
+		let conn;
+		try {
+			conn = await this.pool.getConnection();
+			const mission = await conn.query("SELECT * FROM mission WHERE id = ?", [
+				id,
+			]);
+			return mission[0] || null;
+		} catch (err) {
+			throw new Error(
+				`Erreur lors de la récupération de la mission ${id} ${err}`
 			);
 		} finally {
 			if (conn) conn.release();

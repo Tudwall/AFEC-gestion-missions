@@ -8,5 +8,6 @@ router.post("/create", (req, res) => missionController.createMission(req, res));
 router.get("/orgId/:orgId", (req, res) =>
 	missionController.getMissionsByOrgId(req, res)
 );
+router.get("/id/:id", (req, res) => missionController.getMissionById(req, res));
 
 export default router;
