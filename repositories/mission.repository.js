@@ -32,7 +32,7 @@ class MissionRepository {
 		try {
 			conn = await this.pool.getConnection();
 			const missions = await conn.query(
-				"SELECT * FROM mission WHERE orgId = ?",
+				"SELECT * FROM mission WHERE orgId = ? AND isDeleted = 0",
 				[orgId]
 			);
 			return missions || null;
@@ -76,6 +76,22 @@ class MissionRepository {
 			throw new Error(
 				`Erreur lors de la modification de la mission ${id} ${err}`
 			);
+		} finally {
+			if (conn) conn.release();
+		}
+	}
+
+	async deleteMission(id, { updatedOn }) {
+		let conn;
+		try {
+			conn = await this.pool.getConnection();
+			await conn.query(
+				"UPDATE mission SET isDeleted = 1, updatedOn = ? WHERE id = ?",
+				[updatedOn, id]
+			);
+			return "Mission supprimée avec succès";
+		} catch (err) {
+			throw new Error(`Erreur lors de la suppression de la mission ${id}`);
 		} finally {
 			if (conn) conn.release();
 		}

@@ -48,6 +48,16 @@ class MissionService {
 			throw new Error(err.message);
 		}
 	}
+
+	async deleteMission(id) {
+		try {
+			return await this.missionRepository.deleteMission(id, {
+				updatedOn: createSQLDate(),
+			});
+		} catch {
+			throw new Error(err.message);
+		}
+	}
 }
 
 export default MissionService;

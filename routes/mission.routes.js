@@ -12,4 +12,7 @@ router.get("/id/:id", (req, res) => missionController.getMissionById(req, res));
 router.patch("/update/:id", (req, res) =>
 	missionController.updateMission(req, res)
 );
+router.delete("/delete/:id", (req, res) =>
+	missionController.deleteMission(req, res)
+);
 export default router;

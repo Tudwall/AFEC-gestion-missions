@@ -54,6 +54,16 @@ class MissionController {
 			res.status(400).json({ err: err.message });
 		}
 	}
+
+	async deleteMission(req, res) {
+		const { id } = req.params;
+		try {
+			const deletedMission = await this.missionService.deleteMission(id);
+			res.status(200).json(deletedMission);
+		} catch (err) {
+			res.status(400).json({ err: err.message });
+		}
+	}
 }
 
 export default MissionController;
