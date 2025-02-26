@@ -39,6 +39,21 @@ class MissionController {
 			res.status(400).json({ err: err.message });
 		}
 	}
+
+	async updateMission(req, res) {
+		const { id } = req.params;
+		const { title, missionDetails, orgId } = req.body;
+		try {
+			const updatedMission = await this.missionService.updateMission(id, {
+				title,
+				missionDetails,
+				orgId,
+			});
+			res.status(200).json(updatedMission);
+		} catch (err) {
+			res.status(400).json({ err: err.message });
+		}
+	}
 }
 
 export default MissionController;

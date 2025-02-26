@@ -5,13 +5,19 @@ class MissionRepository {
 		this.pool = pool();
 	}
 
-	async createMission({ title, missionDetails, missionDate, orgId }) {
+	async createMission({
+		title,
+		missionDetails,
+		missionDate,
+		orgId,
+		createdOn,
+	}) {
 		let conn;
 		try {
 			conn = await this.pool.getConnection();
 			const newMission = await conn.query(
-				"INSERT INTO mission (title, missionDetails, missionDate, orgId) VALUES (?, ?, ?, ?) RETURNING *",
-				[title, missionDetails, missionDate, orgId]
+				"INSERT INTO mission (title, missionDetails, missionDate, orgId, createdOn) VALUES (?, ?, ?, ?, ?) RETURNING *",
+				[title, missionDetails, missionDate, orgId, createdOn]
 			);
 			return newMission;
 		} catch (err) {
@@ -50,6 +56,25 @@ class MissionRepository {
 		} catch (err) {
 			throw new Error(
 				`Erreur lors de la récupération de la mission ${id} ${err}`
+			);
+		} finally {
+			if (conn) conn.release();
+		}
+	}
+
+	async updateMission(id, { title, missionDetails, orgId, updatedOn }) {
+		let conn;
+		try {
+			conn = await this.pool.getConnection();
+			await conn.query(
+				"UPDATE mission SET title = ?, missionDetails = ?, orgId = ?, updatedOn = ? WHERE id = ?",
+				[title, missionDetails, orgId, updatedOn, id]
+			);
+
+			return this.getMissionById(id);
+		} catch (err) {
+			throw new Error(
+				`Erreur lors de la modification de la mission ${id} ${err}`
 			);
 		} finally {
 			if (conn) conn.release();
