@@ -28,6 +28,6 @@ VALUES
     );
 
 INSERT INTO
-    application (missionId, volunteerId)
+    application (missionId, volunteerId, createdOn)
 VALUES
-    (1, 2)
+    (1, 2, "2025-02-26")
