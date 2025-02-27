@@ -27,6 +27,19 @@ class MissionRepository {
 		}
 	}
 
+	async getAllMissions() {
+		let conn;
+		try {
+			conn = await this.pool.getConnection();
+			const missions = await conn.query(
+				"SELECT * FROM mission WHERE isDeleted = 0"
+			);
+			return missions || null;
+		} catch (err) {
+			throw new Error(`Erreur lors de la récupération des missions: ${err}`);
+		}
+	}
+
 	async getMissionsByOrgId(orgId) {
 		let conn;
 		try {

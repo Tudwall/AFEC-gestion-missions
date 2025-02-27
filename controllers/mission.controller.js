@@ -20,6 +20,15 @@ class MissionController {
 		}
 	}
 
+	async getAllMissions(req, res) {
+		try {
+			const missions = await this.missionService.getAllMissions();
+			res.status(200).json(missions);
+		} catch (err) {
+			res.status(400).json({ err: err.message });
+		}
+	}
+
 	async getMissionsByOrgId(req, res) {
 		const { orgId } = req.params;
 		try {

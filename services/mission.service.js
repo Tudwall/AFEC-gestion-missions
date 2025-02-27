@@ -20,6 +20,14 @@ class MissionService {
 		}
 	}
 
+	async getAllMissions() {
+		try {
+			return await this.missionRepository.getAllMissions();
+		} catch (err) {
+			throw new Error(err.message);
+		}
+	}
+
 	async getMissionsByOrgId(orgId) {
 		try {
 			return await this.missionRepository.getMissionsByOrgId(orgId);

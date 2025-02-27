@@ -5,6 +5,7 @@ const router = express.Router();
 const missionController = new MissionController();
 
 router.post("/create", (req, res) => missionController.createMission(req, res));
+router.get("/", (req, res) => missionController.getAllMissions(req, res));
 router.get("/orgId/:orgId", (req, res) =>
 	missionController.getMissionsByOrgId(req, res)
 );
