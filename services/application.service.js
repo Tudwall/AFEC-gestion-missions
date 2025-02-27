@@ -35,6 +35,21 @@ class ApplicationService {
 			throw new Error(err.message);
 		}
 	}
+
+	async updateApplicationStatus(id, status) {
+		try {
+			console.log(status);
+			if (!["En attente", "Acceptée", "Refusée"].includes(status)) {
+				throw new Error("status invalide");
+			}
+			return await this.applicationRepository.updateApplicationStatus(id, {
+				status,
+				updatedOn: createSQLDate(),
+			});
+		} catch (err) {
+			throw new Error(err.message);
+		}
+	}
 }
 
 export default ApplicationService;

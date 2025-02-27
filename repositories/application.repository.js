@@ -54,6 +54,24 @@ class ApplicationRepository {
 			if (conn) conn.release();
 		}
 	}
+
+	async updateApplicationStatus(id, { status, updatedOn }) {
+		let conn;
+		try {
+			conn = await this.pool.getConnection();
+			await conn.query(
+				"UPDATE application SET status = ?, updatedOn = ? WHERE id = ?",
+				[status, updatedOn, id]
+			);
+			return this.getApplicationById(id);
+		} catch {
+			throw new Error(
+				`Erreur lors de la modification du status de la candidature ${id}: ${err}`
+			);
+		} finally {
+			if (conn) conn.release();
+		}
+	}
 }
 
 export default ApplicationRepository;

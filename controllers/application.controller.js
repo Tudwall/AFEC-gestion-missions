@@ -38,6 +38,18 @@ class ApplicationController {
 			res.status(400).json({ err: err.message });
 		}
 	}
+
+	async updateApplicationStatus(req, res) {
+		const { id } = req.params;
+		const { status } = req.body;
+		try {
+			const updatedApplication =
+				await this.applicationService.updateApplicationStatus(id, status);
+			res.status(200).json(updatedApplication);
+		} catch (err) {
+			res.status(400).json({ err: err.message });
+		}
+	}
 }
 
 export default ApplicationController;

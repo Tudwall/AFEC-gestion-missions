@@ -13,5 +13,8 @@ router.get("/missionId/:missionId", (req, res) =>
 router.get("/id/:id", (req, res) =>
 	applicationController.getApplicationById(req, res)
 );
+router.patch("/update/:id", (req, res) =>
+	applicationController.updateApplicationStatus(req, res)
+);
 
 export default router;
