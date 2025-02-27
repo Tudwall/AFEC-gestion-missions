@@ -44,6 +44,7 @@ CREATE TABLE
         volunteerId INT NOT NULL,
         createdOn DATETIME NOT NULL,
         updatedOn DATETIME,
+        isDeleted BOOLEAN NOT NULL DEFAULT FALSE,
         CONSTRAINT chk_status CHECK (status IN ("Acceptée", "Refusée", "En attente")),
         CONSTRAINT fk_missionId FOREIGN KEY (missionId) REFERENCES mission (id),
         CONSTRAINT fk_volunteerId FOREIGN KEY (volunteerId) REFERENCES volunteer (id)

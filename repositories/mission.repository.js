@@ -91,7 +91,9 @@ class MissionRepository {
 			);
 			return "Mission supprimée avec succès";
 		} catch (err) {
-			throw new Error(`Erreur lors de la suppression de la mission ${id}`);
+			throw new Error(
+				`Erreur lors de la suppression de la mission ${id}: ${err}`
+			);
 		} finally {
 			if (conn) conn.release();
 		}
