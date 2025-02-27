@@ -17,6 +17,17 @@ class ApplicationController {
 			res.status(400).json({ err: err.message });
 		}
 	}
+
+	async getApplicationsByMissionId(req, res) {
+		const { missionId } = req.params;
+		try {
+			const applications =
+				await this.applicationService.getApplicationsByMissionId(missionId);
+			res.status(200).json(applications);
+		} catch (err) {
+			res.status(400).json({ err: err.message });
+		}
+	}
 }
 
 export default ApplicationController;

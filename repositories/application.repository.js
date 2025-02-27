@@ -18,6 +18,24 @@ class ApplicationRepository {
 			throw new Error("Erreur lors de la création de la candidature: " + err);
 		}
 	}
+
+	async getApplicationsByMissionId(missionId) {
+		let conn;
+		try {
+			conn = await this.pool.getConnection();
+			const applications = await conn.query(
+				"SELECT * FROM application WHERE missionId = ?",
+				[missionId]
+			);
+			return applications || null;
+		} catch (err) {
+			throw new Error(
+				`Erreur lors de la récupération de la candidature liée à ${missionId}: ${err}`
+			);
+		} finally {
+			if (conn) conn.release();
+		}
+	}
 }
 
 export default ApplicationRepository;

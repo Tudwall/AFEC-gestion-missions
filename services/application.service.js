@@ -17,6 +17,16 @@ class ApplicationService {
 			throw new Error(err.message);
 		}
 	}
+
+	async getApplicationsByMissionId(missionId) {
+		try {
+			return await this.applicationRepository.getApplicationsByMissionId(
+				missionId
+			);
+		} catch (err) {
+			throw new Error(err.message);
+		}
+	}
 }
 
 export default ApplicationService;
