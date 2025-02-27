@@ -36,6 +36,24 @@ class ApplicationRepository {
 			if (conn) conn.release();
 		}
 	}
+
+	async getApplicationById(id) {
+		let conn;
+		try {
+			conn = await this.pool.getConnection();
+			const application = await conn.query(
+				"SELECT * FROM application WHERE id = ?",
+				[id]
+			);
+			return application[0] || null;
+		} catch (err) {
+			throw new Error(
+				`Erreur lors de la récupération de la candidature ${id}: ${err}`
+			);
+		} finally {
+			if (conn) conn.release();
+		}
+	}
 }
 
 export default ApplicationRepository;

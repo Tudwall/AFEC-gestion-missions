@@ -27,6 +27,14 @@ class ApplicationService {
 			throw new Error(err.message);
 		}
 	}
+
+	async getApplicationById(id) {
+		try {
+			return await this.applicationRepository.getApplicationById(id);
+		} catch (err) {
+			throw new Error(err.message);
+		}
+	}
 }
 
 export default ApplicationService;

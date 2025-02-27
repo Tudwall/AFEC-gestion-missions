@@ -10,5 +10,8 @@ router.post("/create", (req, res) =>
 router.get("/missionId/:missionId", (req, res) =>
 	applicationController.getApplicationsByMissionId(req, res)
 );
+router.get("/id/:id", (req, res) =>
+	applicationController.getApplicationById(req, res)
+);
 
 export default router;
