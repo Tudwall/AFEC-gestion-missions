@@ -50,6 +50,17 @@ class ApplicationController {
 			res.status(400).json({ err: err.message });
 		}
 	}
+
+	async deleteApplication(req, res) {
+		const { id } = req.params;
+		try {
+			const deletedApplication =
+				await this.applicationService.deleteApplication(id);
+			res.status(200).json(deletedApplication);
+		} catch (err) {
+			res.status(400).json({ err: err.message });
+		}
+	}
 }
 
 export default ApplicationController;

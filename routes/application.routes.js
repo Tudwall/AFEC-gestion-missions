@@ -16,5 +16,8 @@ router.get("/id/:id", (req, res) =>
 router.patch("/update/:id", (req, res) =>
 	applicationController.updateApplicationStatus(req, res)
 );
+router.delete("/delete/:id", (req, res) =>
+	applicationController.deleteApplication(req, res)
+);
 
 export default router;

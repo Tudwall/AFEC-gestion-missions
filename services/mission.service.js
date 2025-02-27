@@ -54,7 +54,7 @@ class MissionService {
 			return await this.missionRepository.deleteMission(id, {
 				updatedOn: createSQLDate(),
 			});
-		} catch {
+		} catch (err) {
 			throw new Error(err.message);
 		}
 	}

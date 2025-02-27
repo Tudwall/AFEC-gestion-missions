@@ -72,6 +72,24 @@ class ApplicationRepository {
 			if (conn) conn.release();
 		}
 	}
+
+	async deleteApplication(id, { updatedOn }) {
+		let conn;
+		try {
+			conn = await this.pool.getConnection();
+			await conn.query(
+				"UPDATE application SET isDeleted = 1, updatedOn = ? WHERE id = ?",
+				[updatedOn, id]
+			);
+			return "Candidature supprimée avec succès";
+		} catch (err) {
+			throw new Error(
+				`Erreur lors de la suppression de la candidature ${id}: ${err}`
+			);
+		} finally {
+			if (conn) conn.release();
+		}
+	}
 }
 
 export default ApplicationRepository;

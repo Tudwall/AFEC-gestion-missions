@@ -50,6 +50,16 @@ class ApplicationService {
 			throw new Error(err.message);
 		}
 	}
+
+	async deleteApplication(id) {
+		try {
+			return await this.applicationRepository.deleteApplication(id, {
+				updatedOn: createSQLDate(),
+			});
+		} catch (err) {
+			throw new Error(err.message);
+		}
+	}
 }
 
 export default ApplicationService;
