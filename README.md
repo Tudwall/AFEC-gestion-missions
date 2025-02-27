@@ -2,7 +2,11 @@
 
 [Schéma de base de données](https://drawsql.app/teams/localhost-12/diagrams/gestionmissions)
 
-### mise en place du .env
+### Endpoints API
+
+La documentation des endpoints de l'API est visible sur http://localhost:{PORT}/api
+
+### Mise en place du .env
 
 ```
 PORT = port utilisé par express
