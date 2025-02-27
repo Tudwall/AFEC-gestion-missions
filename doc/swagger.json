@@ -1,0 +1,508 @@
+{
+	"openapi": "3.1.0",
+	"info": {
+		"title": "Gestionnaire de candidatures",
+		"description": "Cette application permet à des associations de poster des missions, auxquelles des candidats peuvent postuler. Ces candidatures peuvent ensuite être acceptées ou refusées par les associations.",
+		"version": "1.0"
+	},
+	"externalDocs": {
+		"description": "Repository Github",
+		"url": "https://github.com/Tudwall/AFEC-gestion-missions"
+	},
+	"servers": [
+		{
+			"url": "http://localhost:3000/"
+		}
+	],
+	"tags": [
+		{
+			"name": "mission",
+			"description": "Routes des missions"
+		},
+		{
+			"name": "application",
+			"description": "Routes des candidatures"
+		}
+	],
+	"paths": {
+		"/mission/create": {
+			"post": {
+				"tags": ["mission"],
+				"summary": "Créer une nouvelle mission",
+				"description": "Permet de créer une nouvelle mission avec ses détails, date etc.",
+				"operationId": "postMission",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Mission"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"201": {
+						"description": "Requête réussie",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Mission"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Mission"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Mauvaise requête"
+					},
+					"403": {
+						"description": "Non authentifié"
+					}
+				}
+			}
+		},
+		"/mission/": {
+			"get": {
+				"tags": ["mission"],
+				"summary": "Récupération de la liste des missions",
+				"description": "Récupération de la liste de toutes les missions disponibles",
+				"operationId": "getAllMissions",
+				"responses": {
+					"200": {
+						"description": "Requête réussie",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Mission"
+									}
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Ressource introuvable"
+					}
+				}
+			}
+		},
+		"/mission/orgId/{orgId}": {
+			"get": {
+				"tags": ["mission"],
+				"summary": "Recherche les missions selon d'id de l'association",
+				"description": "Recherche les missions selon d'id de l'association qui l'a posté",
+				"operationId": "getMissionByOrgId",
+				"parameters": [
+					{
+						"name": "orgId",
+						"in": "path",
+						"description": "Id de l'association",
+						"required": true,
+						"explode": true,
+						"schema": {
+							"type": "integer",
+							"default": "1"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Requête réussie",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Mission"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Ressource introuvable"
+					}
+				}
+			}
+		},
+		"/mission/id/{id}": {
+			"get": {
+				"tags": ["mission"],
+				"summary": "Recherche une mission par id",
+				"description": "Recherche une mission par son id",
+				"operationId": "getMissionById",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "Id de la mission",
+						"required": true,
+						"explode": true,
+						"schema": {
+							"type": "integer",
+							"default": 1
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Requête réussie",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Mission"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Requête mal formulée"
+					},
+					"404": {
+						"description": "Ressource introuvable"
+					}
+				}
+			}
+		},
+		"/mission/update/{id}": {
+			"patch": {
+				"tags": ["mission"],
+				"summary": "Mettre à jour une mission",
+				"operationId": "updateMission",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id de la mission",
+						"required": true,
+						"schema": {
+							"type": "integer"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Mission mise à jour avec succès",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Mission"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Requête mal formulée"
+					},
+					"404": {
+						"description": "Ressource introuvable"
+					}
+				}
+			}
+		},
+		"/mission/delete/{id}": {
+			"delete": {
+				"tags": ["mission"],
+				"summary": "Supprime une mission",
+				"operationId": "deleteMission",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id de la mission à supprimer",
+						"required": true,
+						"schema": {
+							"type": "integer"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Mission supprimée avec succès",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/application/create": {
+			"post": {
+				"tags": ["application"],
+				"summary": "Créer une candidature",
+				"operationId": "createApplication",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Application"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"201": {
+						"description": "Candidature créée avec succès",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Application"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Requête mal formulée",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Application"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/application/missionId/{missionId}": {
+			"get": {
+				"tags": ["application"],
+				"summary": "Recherche de la liste des candidatures par id de mission",
+				"operationId": "getApplicationByMissionId",
+				"parameters": [
+					{
+						"name": "missionId",
+						"in": "path",
+						"description": "id de la mission dont on cherche les candidatures",
+						"required": true,
+						"schema": {
+							"type": "integer"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Candidatures trouvées",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Application"
+									}
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Candidatures introuvables",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Application"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/application/id/{id}": {
+			"get": {
+				"tags": ["application"],
+				"summary": "Recherche une candidature par id",
+				"operationId": "getApplicationById",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id de la candidature que l'on souhaite rechercher",
+						"required": true,
+						"schema": {
+							"type": "integer"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Candidature trouvée",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"$ref": "#/components/schemas/Application"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Candidatures introuvables",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Application"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/application/update/{id}": {
+			"patch": {
+				"tags": ["application"],
+				"summary": "Mise à jour d'une candidature",
+				"operationId": "updateApplication",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id de la candidature que l'on souhaite mettre à jour",
+						"required": true,
+						"schema": {
+							"type": "integer"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Candidature modifiée",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"$ref": "#/components/schemas/Application"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Candidature introuvable",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Application"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/application/delete/{id}": {
+			"delete": {
+				"tags": ["application"],
+				"summary": "Suppression d'une candidature",
+				"operationId": "deleteApplication",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id de la candidature que l'on souhaite supprimer",
+						"required": true,
+						"schema": {
+							"type": "integer"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Candidature supprimée",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"$ref": "#/components/schemas/Application"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Candidature introuvable",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Application"
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"Mission": {
+				"required": ["title", "missionDetails", "missionDate", "orgId"],
+				"type": "object",
+				"properties": {
+					"title": {
+						"type": "string",
+						"examples": ["Accueil de visiteurs"]
+					},
+					"missionDetails": {
+						"type": "string",
+						"examples": ["Accueillir les visiteurs dans le centre"]
+					},
+					"missionDate": {
+						"type": "string",
+						"examples": ["2025-03-11 00:00:00.000"]
+					},
+					"orgId": {
+						"type": "integer",
+						"examples": ["2"]
+					}
+				}
+			},
+			"Application": {
+				"required": ["missionId", "volunteerId"],
+				"type": "object",
+				"properties": {
+					"missionId": {
+						"type": "integer",
+						"examples": ["1"]
+					},
+					"volunteerId": {
+						"type": "integer",
+						"examples": ["1"]
+					}
+				}
+			},
+			"ApiResponse": {
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "integer"
+					},
+					"type": {
+						"type": "string"
+					},
+					"message": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"requestBodies": {
+			"Mission": {
+				"description": "Pet object that needs to be added to the store",
+				"content": {
+					"application/json": {
+						"schema": {
+							"$ref": "#/components/schemas/Mission"
+						}
+					}
+				}
+			}
+		}
+	}
+}
