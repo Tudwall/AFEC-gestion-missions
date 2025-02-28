@@ -11,6 +11,7 @@ CREATE TABLE
         surname VARCHAR(100),
         email VARCHAR(100) UNIQUE NOT NULL,
         pwd VARCHAR(100) NOT NULL,
+        createdOn DATETIME NOT NULL,
         isDeleted BOOLEAN NOT NULL DEFAULT FALSE
     );
 
@@ -20,6 +21,7 @@ CREATE TABLE
         name VARCHAR(100) NOT NULL,
         email VARCHAR(100) NOT NULL,
         pwd VARCHAR(100) NOT NULL,
+        createdOn DATETIME NOT NULL,
         isDeleted BOOLEAN NOT NULL DEFAULT FALSE
     );
 
