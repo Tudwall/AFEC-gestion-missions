@@ -13,9 +13,11 @@ class ApplicationRepository {
 				"INSERT INTO application (missionId, volunteerId, createdOn) VALUES (?, ?, ?) RETURNING *",
 				[missionId, volunteerId, createdOn]
 			);
-			return newApplication;
+			return newApplication[0];
 		} catch (err) {
 			throw new Error("Erreur lors de la création de la candidature: " + err);
+		} finally {
+			if (conn) conn.release();
 		}
 	}
 

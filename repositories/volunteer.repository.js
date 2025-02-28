@@ -13,7 +13,7 @@ class VolunteerRepository {
 				"INSERT INTO volunteer (name, surname, email, pwd, createdOn) VALUES (?, ?, ?, ?, ?) RETURNING id, name, surname, email, createdOn",
 				[name, surname, email, pwd, createdOn]
 			);
-			return newVolunteer;
+			return newVolunteer[0];
 		} catch (err) {
 			throw new Error(`Erreur lors de l'inscription: ${err}`);
 		} finally {
