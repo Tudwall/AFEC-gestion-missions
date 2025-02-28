@@ -30,7 +30,7 @@ class VolunteerService {
 				throw new Error("Identifiants incorrects");
 			}
 			const token = jwt.sign(
-				{ email: user.email, role: "volunteer" },
+				{ email: user.email, role: ["volunteer"] },
 				process.env.JWT_SECRET,
 				{
 					expiresIn: "1h",
