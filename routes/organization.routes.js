@@ -8,8 +8,4 @@ router.post("/register", (req, res) =>
 	organizationController.createOrganization(req, res)
 );
 
-router.post("/login", (req, res) =>
-	organizationController.loginOrganization(req, res)
-);
-
 export default router;
