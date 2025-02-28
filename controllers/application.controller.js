@@ -12,7 +12,7 @@ class ApplicationController {
 				missionId,
 				volunteerId,
 			});
-			res.status(201).json({ newApplication });
+			res.status(201).json(newApplication);
 		} catch (err) {
 			res.status(400).json({ err: err.message });
 		}
