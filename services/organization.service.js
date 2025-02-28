@@ -39,7 +39,7 @@ class OrganizationService {
 			);
 			return token;
 		} catch (err) {
-			return err;
+			console.error(err);
 		}
 	}
 }
