@@ -19,7 +19,7 @@ class MissionRepository {
 				"INSERT INTO mission (title, missionDetails, missionDate, orgId, createdOn) VALUES (?, ?, ?, ?, ?) RETURNING *",
 				[title, missionDetails, missionDate, orgId, createdOn]
 			);
-			return newMission[0];
+			return newMission;
 		} catch (err) {
 			throw new Error("Erreur lors de la création de la mission: " + err);
 		} finally {
@@ -37,8 +37,6 @@ class MissionRepository {
 			return missions || null;
 		} catch (err) {
 			throw new Error(`Erreur lors de la récupération des missions: ${err}`);
-		} finally {
-			if (conn) conn.release();
 		}
 	}
 

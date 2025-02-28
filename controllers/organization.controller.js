@@ -18,7 +18,7 @@ class OrganizationController {
 			res.status(400).json({ err: err.message });
 		}
 	}
-
+  
 	async loginOrganization(req, res) {
 		if (!req.body.email || !req.body.pwd) {
 			res.json({ message: "mot de passe et email requis" });

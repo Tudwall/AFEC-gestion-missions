@@ -19,7 +19,7 @@ CREATE TABLE
     organization (
         id INT PRIMARY KEY AUTO_INCREMENT,
         name VARCHAR(100) NOT NULL,
-        email VARCHAR(100) NOT NULL UNIQUE,
+        email VARCHAR(100) NOT NULL,
         pwd VARCHAR(100) NOT NULL,
         createdOn DATETIME NOT NULL,
         isDeleted BOOLEAN NOT NULL DEFAULT FALSE
