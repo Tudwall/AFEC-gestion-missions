@@ -1,23 +1,31 @@
 import jwt from "jsonwebtoken";
 
-function authenticateToken(req, res, next) {
-	const cookies = req.headers.cookie;
-	if (!cookies) return res.status(401).json({ message: "Accès refusé" });
+function authenticateToken(role) {
+	return function (req, res, next) {
+		const cookies = req.headers.cookie;
 
-	const token = cookies
-		.split(";")
-		.find((cookie) => cookie.trim().startsWith("token="));
-	if (!token) return res.status(401).json({ message: "Accès refusé" });
+		const token = cookies
+			.split(";")
+			.find((cookie) => cookie.trim().startsWith("token="));
+		if (!token) return res.status(401).json({ message: "Accès refusé" });
 
-	const actualToken = token.split("=")[1];
+		const actualToken = token.split("=")[1];
 
-	jwt.verify(actualToken, process.env.JWT_SECRET, (err) => {
-		if (err) {
-			console.error(err);
-			return res.status(403).json({ message: "token invalide" });
+		if (!actualToken) {
+			return res.status(401).send("Accès refusé, token manquant");
 		}
-		next();
-	});
+
+		try {
+			const decoded = jwt.verify(actualToken, process.env.JWT_SECRET);
+			if (decoded.role.includes(role)) {
+				next();
+			} else {
+				res.status(403).send("Accès refusé, mauvais rôle");
+			}
+		} catch (err) {
+			res.status(400).send("Token invalide");
+		}
+	};
 }
 
 export default authenticateToken;
