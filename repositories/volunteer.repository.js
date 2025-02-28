@@ -13,9 +13,29 @@ class VolunteerRepository {
 				"INSERT INTO volunteer (name, surname, email, pwd, createdOn) VALUES (?, ?, ?, ?, ?) RETURNING id, name, surname, email, createdOn",
 				[name, surname, email, pwd, createdOn]
 			);
-			return newVolunteer;
+			return newVolunteer[0];
 		} catch (err) {
 			throw new Error(`Erreur lors de l'inscription: ${err}`);
+		} finally {
+			if (conn) conn.release();
+		}
+	}
+
+	async getVolunteerByEmail(email) {
+		let conn;
+		try {
+			conn = await this.pool.getConnection();
+			const volunteer = await conn.query(
+				"SELECT * FROM volunteer WHERE email = ?",
+				[email]
+			);
+			return volunteer[0] || null;
+		} catch (err) {
+			throw new Error(
+				`Erreur lors de la récupération de l'utilisateur: ${err}`
+			);
+		} finally {
+			if (conn) conn.release();
 		}
 	}
 }
