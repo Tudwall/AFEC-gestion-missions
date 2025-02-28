@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-function authenticateToken(role) {
+function authenticateToken(roles) {
 	return function (req, res, next) {
 		const cookies = req.headers.cookie;
 
@@ -17,7 +17,7 @@ function authenticateToken(role) {
 
 		try {
 			const decoded = jwt.verify(actualToken, process.env.JWT_SECRET);
-			if (decoded.role.includes(role)) {
+			if (roles.includes(decoded.role)) {
 				next();
 			} else {
 				res.status(403).send("Accès refusé, mauvais rôle");
