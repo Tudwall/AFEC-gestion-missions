@@ -30,15 +30,19 @@ class VolunteerController {
 				email,
 				pwd,
 			});
-			res.cookie("token", volunteerToken, {
-				httpOnly: true,
-				secure: process.env.NODE_ENV === "production",
-				sameSite: "Strict",
-				expires: new Date(Date.now() + 3600000),
-			});
-			res.status(200).json({ message: "Connexion réussie" });
+			if (!volunteerToken) {
+				throw new Error("Identifiants incorrects");
+			} else {
+				res.cookie("token", volunteerToken, {
+					httpOnly: true,
+					secure: process.env.NODE_ENV === "production",
+					sameSite: "Strict",
+					expires: new Date(Date.now() + 3600000),
+				});
+				res.status(200).json({ message: "Connexion réussie" });
+			}
 		} catch (err) {
-			res.status(401).json({ message: "Identifiants incorrects" });
+			res.status(401).json(err.message);
 		}
 	}
 }
