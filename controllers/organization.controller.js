@@ -27,15 +27,19 @@ class OrganizationController {
 		try {
 			const organizationToken =
 				await this.organizationService.loginOrganization({ email, pwd });
-			res.cookie("token", organizationToken, {
-				httpOnly: true,
-				secure: process.env.NODE_ENV === "production",
-				sameSite: "Strict",
-				expires: new Date(Date.now() + 3600000),
-			});
-			res.status(200).json({ message: "Connexion réussie" });
+			if (!organizationToken) {
+				throw new Error("Identifiants incorrects");
+			} else {
+				res.cookie("token", organizationToken, {
+					httpOnly: true,
+					secure: process.env.NODE_ENV === "production",
+					sameSite: "Strict",
+					expires: new Date(Date.now() + 3600000),
+				});
+				res.status(200).json({ message: "Connexion réussie" });
+			}
 		} catch (err) {
-			res.status(401).json({ message: "Identifiants incorrects" });
+			res.status(401).json(err.message);
 		}
 	}
 }
