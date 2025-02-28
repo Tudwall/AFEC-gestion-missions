@@ -16,6 +16,26 @@ class VolunteerRepository {
 			return newVolunteer;
 		} catch (err) {
 			throw new Error(`Erreur lors de l'inscription: ${err}`);
+		} finally {
+			if (conn) conn.release();
+		}
+	}
+
+	async getVolunteerByEmail(email) {
+		let conn;
+		try {
+			conn = await this.pool.getConnection();
+			const volunteer = await conn.query(
+				"SELECT * FROM volunteer WHERE email = ?",
+				[email]
+			);
+			return volunteer[0] || null;
+		} catch (err) {
+			throw new Error(
+				`Erreur lors de la récupération de l'utilisateur: ${err}`
+			);
+		} finally {
+			if (conn) conn.release();
 		}
 	}
 }
