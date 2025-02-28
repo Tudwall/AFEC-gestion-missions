@@ -20,6 +20,24 @@ class OrganizationRepository {
 			if (conn) conn.release();
 		}
 	}
+
+	async getOrganizationByEmail(email) {
+		let conn;
+		try {
+			conn = await this.pool.getConnection();
+			const org = await conn.query(
+				"SELECT * FROM organization WHERE email = ?",
+				[email]
+			);
+			return org[0] || null;
+		} catch (err) {
+			throw new Error(
+				`Erreur lors de la récupération de l'utilisateur: ${err}`
+			);
+		} finally {
+			if (conn) conn.release();
+		}
+	}
 }
 
 export default OrganizationRepository;

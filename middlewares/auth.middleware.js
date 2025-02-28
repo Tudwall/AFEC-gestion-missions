@@ -17,7 +17,7 @@ function authenticateToken(roles) {
 
 		try {
 			const decoded = jwt.verify(actualToken, process.env.JWT_SECRET);
-			if (roles.includes(decoded.role)) {
+			if (roles.includes(decoded.role[0])) {
 				next();
 			} else {
 				res.status(403).send("Accès refusé, mauvais rôle");
