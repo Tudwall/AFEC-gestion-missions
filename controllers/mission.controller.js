@@ -16,7 +16,7 @@ class MissionController {
 			});
 			res.status(201).json(newMission);
 		} catch (err) {
-			res.status(400).json({ err: err.message });
+			res.status(400).json({ message: "Quelque chose s'est mal passé" });
 		}
 	}
 
