@@ -15,6 +15,7 @@ class OrganizationRepository {
 			);
 			return newOrg[0];
 		} catch (err) {
+			console.error(err);
 			throw new Error(`Erreur lors de l'inscription: ${err}`);
 		} finally {
 			if (conn) conn.release();
@@ -31,6 +32,7 @@ class OrganizationRepository {
 			);
 			return org[0] || null;
 		} catch (err) {
+			console.error(err);
 			throw new Error(
 				`Erreur lors de la récupération de l'utilisateur: ${err}`
 			);

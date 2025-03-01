@@ -14,7 +14,7 @@ class ApplicationController {
 			});
 			res.status(201).json(newApplication);
 		} catch (err) {
-			res.status(400).json({ err: err.message });
+			res.status(400).send({ message: "Quelque chose s'est mal passé" });
 		}
 	}
 

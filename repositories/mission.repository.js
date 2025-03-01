@@ -21,6 +21,7 @@ class MissionRepository {
 			);
 			return newMission[0];
 		} catch (err) {
+			console.error(err);
 			throw new Error("Erreur lors de la création de la mission: " + err);
 		} finally {
 			if (conn) conn.release();
@@ -36,6 +37,7 @@ class MissionRepository {
 			);
 			return missions || null;
 		} catch (err) {
+			console.error(err);
 			throw new Error(`Erreur lors de la récupération des missions: ${err}`);
 		} finally {
 			if (conn) conn.release();
@@ -52,6 +54,7 @@ class MissionRepository {
 			);
 			return missions || null;
 		} catch (err) {
+			console.error(err);
 			throw new Error(
 				`Erreur lors de la récupération des missions de l'association ${orgId}: ${err}`
 			);
@@ -69,6 +72,7 @@ class MissionRepository {
 			]);
 			return mission[0] || null;
 		} catch (err) {
+			console.error(err);
 			throw new Error(
 				`Erreur lors de la récupération de la mission ${id} ${err}`
 			);
@@ -88,6 +92,7 @@ class MissionRepository {
 
 			return this.getMissionById(id);
 		} catch (err) {
+			console.error(err);
 			throw new Error(
 				`Erreur lors de la modification de la mission ${id} ${err}`
 			);
@@ -106,6 +111,7 @@ class MissionRepository {
 			);
 			return "Mission supprimée avec succès";
 		} catch (err) {
+			console.error(err);
 			throw new Error(
 				`Erreur lors de la suppression de la mission ${id}: ${err}`
 			);
