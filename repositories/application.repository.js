@@ -15,6 +15,7 @@ class ApplicationRepository {
 			);
 			return newApplication[0];
 		} catch (err) {
+			console.error(err);
 			throw new Error("Erreur lors de la création de la candidature: " + err);
 		} finally {
 			if (conn) conn.release();

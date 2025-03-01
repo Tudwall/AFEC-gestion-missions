@@ -21,6 +21,7 @@ class MissionRepository {
 			);
 			return newMission[0];
 		} catch (err) {
+			console.error(err);
 			throw new Error("Erreur lors de la création de la mission: " + err);
 		} finally {
 			if (conn) conn.release();
