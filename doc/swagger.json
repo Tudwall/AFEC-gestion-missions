@@ -477,6 +477,46 @@
 					}
 				}
 			},
+			"Volunteer": {
+				"required": ["name", "surname", "email", "pwd"],
+				"type": "object",
+				"properties": {
+					"name": {
+						"type": "string",
+						"examples": ["John"]
+					},
+					"surname": {
+						"type": "string",
+						"examples": ["Doe"]
+					},
+					"email": {
+						"type": "string",
+						"examples": ["example@example.fr"]
+					},
+					"pwd": {
+						"type": "string",
+						"examples": ["password123"]
+					}
+				}
+			},
+			"Organization": {
+				"required": ["name", "email", "pwd"],
+				"type": "object",
+				"properties": {
+					"name": {
+						"type": "string",
+						"examples": ["organization name"]
+					},
+					"email": {
+						"type": "string",
+						"examples": ["example@example.fr"]
+					},
+					"pwd": {
+						"type": "string",
+						"examples": ["password123"]
+					}
+				}
+			},
 			"ApiResponse": {
 				"type": "object",
 				"properties": {
