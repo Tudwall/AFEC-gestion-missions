@@ -32,6 +32,7 @@ class ApplicationRepository {
 			);
 			return applications || null;
 		} catch (err) {
+			console.error(err);
 			throw new Error(
 				`Erreur lors de la récupération de la candidature liée à ${missionId}: ${err}`
 			);
@@ -50,6 +51,7 @@ class ApplicationRepository {
 			);
 			return application[0] || null;
 		} catch (err) {
+			console.error(err);
 			throw new Error(
 				`Erreur lors de la récupération de la candidature ${id}: ${err}`
 			);
@@ -68,6 +70,7 @@ class ApplicationRepository {
 			);
 			return this.getApplicationById(id);
 		} catch {
+			console.error(err);
 			throw new Error(
 				`Erreur lors de la modification du status de la candidature ${id}: ${err}`
 			);
@@ -86,6 +89,7 @@ class ApplicationRepository {
 			);
 			return "Candidature supprimée avec succès";
 		} catch (err) {
+			console.error(err);
 			throw new Error(
 				`Erreur lors de la suppression de la candidature ${id}: ${err}`
 			);
