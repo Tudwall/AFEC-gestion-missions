@@ -22,6 +22,14 @@
 		{
 			"name": "application",
 			"description": "Routes des candidatures"
+		},
+		{
+			"name": "volunteer",
+			"description": "Routes des bénévoles"
+		},
+		{
+			"name": "organization",
+			"description": "Routes des associations"
 		}
 	],
 	"paths": {
@@ -437,6 +445,162 @@
 					}
 				}
 			}
+		},
+		"/volunteer/register": {
+			"post": {
+				"tags": ["volunteer"],
+				"summary": "Inscription d'un bénévole",
+				"operationId": "createVolunteer",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Volunteer"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "Bénévole inscrit avec succès",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Volunteer"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Erreur lors de l'inscription du bénévole",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Volunteer"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/volunteer/login": {
+			"post": {
+				"tags": ["volunteer"],
+				"summary": "Connecte un bénévole",
+				"operationId": "loginVolunteer",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/VolLogin"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "Bénévole connecté avec succès",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/VolLogin"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Erreur lors de la connexion du bénévole",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/VolLogin"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/organization/register": {
+			"post": {
+				"tags": ["organization"],
+				"summary": "Inscription d'une association",
+				"operationId": "createOrganization",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Organization"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "Association inscrite avec succès",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Organization"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Erreur lors de l'inscription dde l'association",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Organization"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/organization/login": {
+			"post": {
+				"tags": ["organization"],
+				"summary": "Connexion d'une association",
+				"operationId": "loginOrganization",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/OrgLogin"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "Association connectée avec succès",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/OrgLogin"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Erreur lors de la connexion de l'association",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/OrgLogin"
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 	},
 	"components": {
@@ -517,6 +681,34 @@
 					}
 				}
 			},
+			"OrgLogin": {
+				"required": ["email", "pwd"],
+				"type": "object",
+				"properties": {
+					"email": {
+						"type": "string",
+						"examples": ["example@example.fr"]
+					},
+					"pwd": {
+						"type": "string",
+						"examples": ["password123"]
+					}
+				}
+			},
+			"VolLogin": {
+				"required": ["email", "pwd"],
+				"type": "object",
+				"properties": {
+					"email": {
+						"type": "string",
+						"examples": ["example@example.fr"]
+					},
+					"pwd": {
+						"type": "string",
+						"examples": ["password123"]
+					}
+				}
+			},
 			"ApiResponse": {
 				"type": "object",
 				"properties": {
@@ -527,18 +719,10 @@
 						"type": "string"
 					},
 					"message": {
-						"type": "string"
-					}
-				}
-			}
-		},
-		"requestBodies": {
-			"Mission": {
-				"description": "Pet object that needs to be added to the store",
-				"content": {
-					"application/json": {
-						"schema": {
-							"$ref": "#/components/schemas/Mission"
+						"type": "object",
+						"examples": {
+							"id": 1,
+							"name": "name"
 						}
 					}
 				}
