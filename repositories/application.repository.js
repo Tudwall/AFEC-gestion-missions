@@ -5,13 +5,13 @@ class ApplicationRepository {
 		this.pool = pool();
 	}
 
-	async createApplication({ missionId, volunteerId, createdOn }) {
+	async createApplication({ missionId, volunteerId }) {
 		let conn;
 		try {
 			conn = await this.pool.getConnection();
 			const newApplication = await conn.query(
-				"INSERT INTO application (missionId, volunteerId, createdOn) VALUES (?, ?, ?) RETURNING *",
-				[missionId, volunteerId, createdOn]
+				"INSERT INTO application (missionId, volunteerId) VALUES (?, ?) RETURNING *",
+				[missionId, volunteerId]
 			);
 			return newApplication[0];
 		} catch (err) {
@@ -60,13 +60,13 @@ class ApplicationRepository {
 		}
 	}
 
-	async updateApplicationStatus(id, { status, updatedOn }) {
+	async updateApplicationStatus(id, status) {
 		let conn;
 		try {
 			conn = await this.pool.getConnection();
 			await conn.query(
-				"UPDATE application SET status = ?, updatedOn = ? WHERE id = ?",
-				[status, updatedOn, id]
+				"UPDATE application SET status = ?, updatedOn = CURRENT_TIMESTAMP WHERE id = ?",
+				[status, id]
 			);
 			return this.getApplicationById(id);
 		} catch {
@@ -79,13 +79,13 @@ class ApplicationRepository {
 		}
 	}
 
-	async deleteApplication(id, { updatedOn }) {
+	async deleteApplication(id) {
 		let conn;
 		try {
 			conn = await this.pool.getConnection();
 			await conn.query(
-				"UPDATE application SET isDeleted = 1, updatedOn = ? WHERE id = ?",
-				[updatedOn, id]
+				"UPDATE application SET isDeleted = 1, updatedOn = CURRENT_TIMESTAMP WHERE id = ?",
+				[id]
 			);
 			return "Candidature supprimée avec succès";
 		} catch (err) {

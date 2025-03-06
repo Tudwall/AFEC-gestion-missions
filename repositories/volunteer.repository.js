@@ -5,13 +5,13 @@ class VolunteerRepository {
 		this.pool = pool();
 	}
 
-	async createVolunteer({ name, surname, email, pwd, createdOn }) {
+	async createVolunteer({ name, surname, email, pwd }) {
 		let conn;
 		try {
 			conn = await this.pool.getConnection();
 			const newVolunteer = await conn.query(
-				"INSERT INTO volunteer (name, surname, email, pwd, createdOn) VALUES (?, ?, ?, ?, ?) RETURNING id, name, surname, email, createdOn",
-				[name, surname, email, pwd, createdOn]
+				"INSERT INTO volunteer (name, surname, email, pwd) VALUES (?, ?, ?, ?) RETURNING id, name, surname, email, createdOn",
+				[name, surname, email, pwd]
 			);
 			return newVolunteer[0];
 		} catch (err) {

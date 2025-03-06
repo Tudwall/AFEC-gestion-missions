@@ -5,13 +5,13 @@ class OrganizationRepository {
 		this.pool = pool();
 	}
 
-	async createOrganization({ name, email, pwd, createdOn }) {
+	async createOrganization({ name, email, pwd }) {
 		let conn;
 		try {
 			conn = await this.pool.getConnection();
 			const newOrg = await conn.query(
-				"INSERT INTO organization (name, email, pwd, createdOn) VALUES (?, ?, ?, ?) RETURNING name, email, createdOn",
-				[name, email, pwd, createdOn]
+				"INSERT INTO organization (name, email, pwd) VALUES (?, ?, ?) RETURNING name, email, createdOn",
+				[name, email, pwd]
 			);
 			return newOrg[0];
 		} catch (err) {

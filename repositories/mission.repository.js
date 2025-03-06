@@ -5,19 +5,13 @@ class MissionRepository {
 		this.pool = pool();
 	}
 
-	async createMission({
-		title,
-		missionDetails,
-		missionDate,
-		orgId,
-		createdOn,
-	}) {
+	async createMission({ title, missionDetails, missionDate, orgId }) {
 		let conn;
 		try {
 			conn = await this.pool.getConnection();
 			const newMission = await conn.query(
-				"INSERT INTO mission (title, missionDetails, missionDate, orgId, createdOn) VALUES (?, ?, ?, ?, ?) RETURNING *",
-				[title, missionDetails, missionDate, orgId, createdOn]
+				"INSERT INTO mission (title, missionDetails, missionDate, orgId) VALUES (?, ?, ?, ?, ?) RETURNING *",
+				[title, missionDetails, missionDate, orgId]
 			);
 			return newMission[0];
 		} catch (err) {
@@ -81,13 +75,13 @@ class MissionRepository {
 		}
 	}
 
-	async updateMission(id, { title, missionDetails, orgId, updatedOn }) {
+	async updateMission(id, { title, missionDetails, orgId }) {
 		let conn;
 		try {
 			conn = await this.pool.getConnection();
 			await conn.query(
-				"UPDATE mission SET title = ?, missionDetails = ?, orgId = ?, updatedOn = ? WHERE id = ?",
-				[title, missionDetails, orgId, updatedOn, id]
+				"UPDATE mission SET title = ?, missionDetails = ?, orgId = ?, updatedOn = CURRENT_TIMESTAMP WHERE id = ?",
+				[title, missionDetails, orgId, id]
 			);
 
 			return this.getMissionById(id);
@@ -101,13 +95,13 @@ class MissionRepository {
 		}
 	}
 
-	async deleteMission(id, { updatedOn }) {
+	async deleteMission(id) {
 		let conn;
 		try {
 			conn = await this.pool.getConnection();
 			await conn.query(
-				"UPDATE mission SET isDeleted = 1, updatedOn = ? WHERE id = ?",
-				[updatedOn, id]
+				"UPDATE mission SET isDeleted = 1, updatedOn = CURRENT_TIMESTAMP WHERE id = ?",
+				[id]
 			);
 			return "Mission supprimée avec succès";
 		} catch (err) {
