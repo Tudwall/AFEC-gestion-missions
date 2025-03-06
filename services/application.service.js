@@ -1,5 +1,4 @@
 import ApplicationRepository from "../repositories/application.repository.js";
-import createSQLDate from "../utils/date.js";
 
 class ApplicationService {
 	constructor() {
@@ -11,7 +10,6 @@ class ApplicationService {
 			return await this.applicationRepository.createApplication({
 				missionId,
 				volunteerId,
-				createdOn: createSQLDate(),
 			});
 		} catch (err) {
 			throw new Error(err.message);
@@ -42,10 +40,10 @@ class ApplicationService {
 			if (!["En attente", "Acceptée", "Refusée"].includes(status)) {
 				throw new Error("status invalide");
 			}
-			return await this.applicationRepository.updateApplicationStatus(id, {
-				status,
-				updatedOn: createSQLDate(),
-			});
+			return await this.applicationRepository.updateApplicationStatus(
+				id,
+				status
+			);
 		} catch (err) {
 			throw new Error(err.message);
 		}
@@ -53,9 +51,7 @@ class ApplicationService {
 
 	async deleteApplication(id) {
 		try {
-			return await this.applicationRepository.deleteApplication(id, {
-				updatedOn: createSQLDate(),
-			});
+			return await this.applicationRepository.deleteApplication(id);
 		} catch (err) {
 			throw new Error(err.message);
 		}

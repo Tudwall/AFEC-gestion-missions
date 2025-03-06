@@ -1,5 +1,4 @@
 import MissionRepository from "../repositories/mission.repository.js";
-import createSQLDate from "../utils/date.js";
 
 class MissionService {
 	constructor() {
@@ -13,7 +12,6 @@ class MissionService {
 				missionDetails,
 				missionDate,
 				orgId,
-				createdOn: createSQLDate(),
 			});
 		} catch (err) {
 			throw new Error(err.message);
@@ -50,7 +48,6 @@ class MissionService {
 				title,
 				missionDetails,
 				orgId,
-				updatedOn: createSQLDate(),
 			});
 		} catch (err) {
 			throw new Error(err.message);
@@ -59,9 +56,7 @@ class MissionService {
 
 	async deleteMission(id) {
 		try {
-			return await this.missionRepository.deleteMission(id, {
-				updatedOn: createSQLDate(),
-			});
+			return await this.missionRepository.deleteMission(id);
 		} catch (err) {
 			throw new Error(err.message);
 		}

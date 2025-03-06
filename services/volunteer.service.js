@@ -1,5 +1,4 @@
 import VolunteerRepository from "../repositories/volunteer.repository.js";
-import createSQLDate from "../utils/date.js";
 import argon2 from "argon2";
 import jwt from "jsonwebtoken";
 
@@ -16,7 +15,6 @@ class VolunteerService {
 				surname,
 				email,
 				pwd: hashedPwd,
-				createdOn: createSQLDate(),
 			});
 		} catch (err) {
 			throw new Error(err.message);

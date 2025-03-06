@@ -11,7 +11,7 @@ CREATE TABLE
         surname VARCHAR(100),
         email VARCHAR(100) UNIQUE NOT NULL,
         pwd VARCHAR(100) NOT NULL,
-        createdOn DATETIME NOT NULL,
+        createdOn TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         isDeleted BOOLEAN NOT NULL DEFAULT FALSE
     );
 
@@ -21,7 +21,7 @@ CREATE TABLE
         name VARCHAR(100) NOT NULL,
         email VARCHAR(100) NOT NULL UNIQUE,
         pwd VARCHAR(100) NOT NULL,
-        createdOn DATETIME NOT NULL,
+        createdOn TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         isDeleted BOOLEAN NOT NULL DEFAULT FALSE
     );
 
@@ -30,10 +30,10 @@ CREATE TABLE
         id INT PRIMARY KEY AUTO_INCREMENT,
         title VARCHAR(250) NOT NULL,
         missionDetails VARCHAR(2000) NOT NULL,
-        missionDate DATETIME NOT NULL,
-        orgId INT NOT NULL,
-        createdOn DATETIME NOT NULL,
-        updatedOn DATETIME,
+        missionDate TIMESTAMP NOT NULL,
+        orgId INT NOT NULL UNIQUE,
+        createdOn TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        updatedOn TIMESTAMP,
         isDeleted BOOLEAN NOT NULL DEFAULT FALSE,
         CONSTRAINT fk_orgId FOREIGN KEY (orgId) REFERENCES organization (id)
     );
@@ -44,8 +44,8 @@ CREATE TABLE
         status VARCHAR(10) NOT NULL DEFAULT "En attente",
         missionId INT NOT NULL,
         volunteerId INT NOT NULL,
-        createdOn DATETIME NOT NULL,
-        updatedOn DATETIME,
+        createdOn TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        updatedOn TIMESTAMP,
         isDeleted BOOLEAN NOT NULL DEFAULT FALSE,
         CONSTRAINT chk_status CHECK (status IN ("Acceptée", "Refusée", "En attente")),
         CONSTRAINT fk_missionId FOREIGN KEY (missionId) REFERENCES mission (id),

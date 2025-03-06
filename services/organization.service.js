@@ -1,5 +1,4 @@
 import OrganizationRepository from "../repositories/organization.repository.js";
-import createSQLDate from "../utils/date.js";
 import argon2 from "argon2";
 import jwt from "jsonwebtoken";
 
@@ -15,7 +14,6 @@ class OrganizationService {
 				name,
 				email,
 				pwd: hashedPwd,
-				createdOn: createSQLDate(),
 			});
 		} catch (err) {
 			throw new Error(err.message);
