@@ -1,12 +1,17 @@
 import express from "express";
 import MissionController from "../controllers/mission.controller.js";
 import authenticateToken from "../middlewares/auth.middleware.js";
+import validate from "../validate.js";
+import { missionSchema } from "../validator.js";
 
 const router = express.Router();
 const missionController = new MissionController();
 
-router.post("/create", authenticateToken(["organization"]), (req, res) =>
-	missionController.createMission(req, res)
+router.post(
+	"/create",
+	validate(missionSchema),
+	authenticateToken(["organization"]),
+	(req, res) => missionController.createMission(req, res)
 );
 
 router.get("/", authenticateToken(["volunteer", "organization"]), (req, res) =>

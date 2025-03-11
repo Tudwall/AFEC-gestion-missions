@@ -1,12 +1,17 @@
 import express from "express";
 import ApplicationController from "../controllers/application.controller.js";
 import authenticateToken from "../middlewares/auth.middleware.js";
+import validate from "../validate.js";
+import { applicationSchema } from "../validator.js";
 
 const router = express.Router();
 const applicationController = new ApplicationController();
 
-router.post("/create", authenticateToken("volunteer"), (req, res) =>
-	applicationController.createApplication(req, res)
+router.post(
+	"/create",
+	validate(applicationSchema),
+	authenticateToken("volunteer"),
+	(req, res) => applicationController.createApplication(req, res)
 );
 
 router.get(
