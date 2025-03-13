@@ -7,9 +7,12 @@ import applicationRoutes from "./routes/application.routes.js";
 import volunteerRoutes from "./routes/volunteer.routes.js";
 import organizationRoutes from "./routes/organization.routes.js";
 import errorHandler from "./middlewares/errorHandler.middleware.js";
+import helmet from "helmet";
 
 const PORT = process.env.PORT;
 const app = express();
+
+app.use(helmet())
 
 app.use("/api", swaggerUi.serve, swaggerUi.setup(swaggerDoc))
 

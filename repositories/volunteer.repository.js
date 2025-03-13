@@ -10,7 +10,7 @@ class VolunteerRepository {
 		try {
 			conn = await this.pool.getConnection();
 			const newVolunteer = await conn.query(
-				"INSERT INTO volunteer (name, surname, email, pwd) VALUES (?, ?, ?, ?) RETURNING id, name, surname, email, createdOn",
+				"INSERT INTO volunteer (name, surname, email, pwd) VALUES (?, ?, ?, ?) RETURNING id, name, surname, email, pwd, createdOn",
 				[name, surname, email, pwd]
 			);
 			return newVolunteer[0];
